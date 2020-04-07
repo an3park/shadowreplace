@@ -1,4 +1,4 @@
-> Easy lightweight library to replace web content without reload page
+> Easy lightweight library to replace web content without reloading page
 
 [Example](https://an3park.github.io/shadowreplace)
 
