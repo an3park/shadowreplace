@@ -18,15 +18,12 @@ window.shadowReplace = function (o) {
     })
   }
 
-  function pushContent(dom, selector) {
+  function pushContent(dom) {
     const shadow = document.createElement('div').attachShadow({ mode: 'closed' })
     shadow.innerHTML = dom
     document.title = shadow.querySelector('title').innerText
-    const target = document.querySelector(selector || props.targetSelector)
-    target.parentElement.replaceChild(
-      shadow.querySelector(selector || props.targetSelector),
-      target
-    )
+    const target = document.querySelector(props.targetSelector)
+    target.parentElement.replaceChild(shadow.querySelector(props.targetSelector), target)
   }
 
   function fetchAndPush(url) {
