@@ -2,9 +2,12 @@ window.shadowReplace = function (o) {
   if (o === null || typeof o !== 'object') o = {}
   const props = {
     activeLinkAttribute: o.activeLinkAttribute,
-    targetSelector: o.targetSelector || '#container',
+    replaceContainer: o.replaceContainer || '#container',
     linksSelector: o.linksNodeList || document.getElementsByClassName('link'),
-    history: o.history !== false
+    history: o.history !== false,
+    onprogress: o.onprogress,
+    onloadstart: o.onloadstart,
+    onloadend: o.onloadend
   }
 
   function fetche(url) {
@@ -14,6 +17,9 @@ window.shadowReplace = function (o) {
       xhr.open('GET', url)
       xhr.addEventListener('load', () => resolve(xhr.response))
       xhr.addEventListener('error', reject)
+      if (props.onloadstart) xhr.addEventListener('loadstart', props.onloadstart)
+      if (props.onprogress) xhr.addEventListener('progress', props.onprogress)
+      if (props.onloadend) xhr.addEventListener('loadend', props.onloadend)
       xhr.send()
     })
   }
@@ -22,8 +28,8 @@ window.shadowReplace = function (o) {
     const shadow = document.createElement('div').attachShadow({ mode: 'closed' })
     shadow.innerHTML = dom
     document.title = shadow.querySelector('title').innerText
-    const target = document.querySelector(props.targetSelector)
-    target.parentElement.replaceChild(shadow.querySelector(props.targetSelector), target)
+    const target = document.querySelector(props.replaceContainer)
+    target.parentElement.replaceChild(shadow.querySelector(props.replaceContainer), target)
   }
 
   function fetchAndPush(url) {
