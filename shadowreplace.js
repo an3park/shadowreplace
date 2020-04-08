@@ -70,7 +70,7 @@ window.shadowReplace = function (o) {
   if (props.history) {
     window.addEventListener('popstate', e => {
       if (!e.state || !e.state.shadowReplace) return
-      fetchAndPush(document.location)
+      fetchAndPush(document.location.href)
     })
   }
 }
